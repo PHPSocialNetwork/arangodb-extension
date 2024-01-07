@@ -24,3 +24,25 @@ composer install phpfastcache/arangodb-extension
 
 #### ⚠️ This extension requires:
 1️ The composer `triagens/arangodb` library 3.8 at least.
+
+## Events
+This driver is emitting [customs events](https://github.com/PHPSocialNetwork/phpfastcache/blob/master/docs/EVENTS.md):
+- onArangodbConnection(*Callable* **$callback**)
+    - **Callback arguments**
+        - *ExtendedCacheItemPoolInterface* **$itemPool**
+        - *EventReferenceParameter($connectionOptions)* **$connectionOptions** _via EventReferenceParameter object_ **(type modification forbidden)**
+    - **Scope**
+        - Arangodb Driver
+    - **Description**
+        - Allow you to alter the parameters built used to connect to Arangodb server
+    - **Risky Circular Methods**: None
+
+- onArangodbCollectionParams(*Callable* **$callback**)
+    - **Callback arguments**
+        - *ExtendedCacheItemPoolInterface* **$itemPool**
+        - *EventReferenceParameter($params)* **$params** _via EventReferenceParameter object_ **(type modification forbidden)**
+    - **Scope**
+        - Arangodb Driver
+    - **Description**
+        - Allow you to alter the parameters built used to create the collection
+    - **Risky Circular Methods**: None
