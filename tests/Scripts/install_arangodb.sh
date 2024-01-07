@@ -6,17 +6,17 @@ mkdir -p arangodb
 cd arangodb
 export ARANGODB_ROOT_PASSWD=password
 
-curl -OL https://download.arangodb.com/arangodb38/DEBIAN/Release.key
+curl -OL https://download.arangodb.com/arangodb310/DEBIAN/Release.key
 sudo apt-key add - < Release.key
 
-echo 'deb https://download.arangodb.com/arangodb38/DEBIAN/ /' | sudo tee /etc/apt/sources.list.d/arangodb.list
+echo 'deb https://download.arangodb.com/arangodb310/DEBIAN/ /' | sudo tee /etc/apt/sources.list.d/arangodb.list
 sudo apt-get install apt-transport-https
 sudo apt-get update || true
 
 sudo sh -c 'echo arangodb3 arangodb3/password password $ARANGODB_ROOT_PASSWD | debconf-set-selections'
 sudo sh -c 'echo arangodb3 arangodb3/password_again password $ARANGODB_ROOT_PASSWD | debconf-set-selections'
 
-sudo apt-get install arangodb3=3.10.2
+sudo apt-get install arangodb3=3.10.2-1
 
 printf "\n\n"
 echo "#################################"
