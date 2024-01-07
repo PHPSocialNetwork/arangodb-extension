@@ -1,0 +1,61 @@
+{
+    "name": "phpfastcache/arangodb-extension",
+    "type" : "phpfastcache-extension",
+    "description": "Phpfastcache Arangodb extension",
+    "keywords": ["cache", "phpfastcache", "arangodb"],
+    "homepage": "https://github.com/PHPSocialNetwork/arangodb-extension",
+    "license": "MIT",
+    "readme": "README.md",
+    "minimum-stability": "beta",
+    "authors": [
+            {
+                "name": "Georges.L",
+                "email": "contact@geolim4.com",
+                "homepage": "https://github.com/Geolim4",
+                "role": "Project Manager"
+            }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "phpfastcache/phpfastcache": "^9.2",
+        "triagens/arangodb": "~3.8"
+    },
+    "require-dev": {
+        "phpmd/phpmd": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "phpstan/phpstan": "^1.5",
+        "jetbrains/phpstorm-stubs": "dev-master",
+        "phpfastcache/phpfastcache-devtools": "^9.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phpfastcache\\Extensions\\": "lib/Phpfastcache/Extensions"
+        },
+        "files": [
+            "lib/ExtensionRegister.php"
+        ]
+    },
+    "scripts": {
+        "phpcs": "vendor/bin/phpcs lib/ --report=summary",
+        "phpcbf": "vendor/bin/phpcbf lib/ --report=summary",
+        "phpmd": "vendor/bin/phpmd lib/ ansi phpmd.xml",
+        "phpstan": "vendor/bin/phpstan analyse lib/ -l 6 -c phpstan.neon",
+        "quality": ["@phpcs", "@phpmd", "@phpstan"],
+        "tests": [
+            "php ./tests/Arangodb.test.php"
+        ]
+    },
+    "support": {
+        "issues": "https://github.com/PHPSocialNetwork/phpfastcache/issues",
+        "wiki": "https://github.com/PHPSocialNetwork/phpfastcache/wiki",
+        "docs": "https://github.com/PHPSocialNetwork/phpfastcache/wiki",
+        "source": "https://github.com/PHPSocialNetwork/phpfastcache",
+        "security": "https://github.com/PHPSocialNetwork/phpfastcache/blob/master/SECURITY.md"
+    },
+    "funding": [
+        {
+            "type": "patreon",
+            "url": "https://www.patreon.com/geolim4"
+        }
+    ]
+}

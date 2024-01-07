@@ -1,0 +1,54 @@
+name: Arangodb extension tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['8.0', '8.1', '8.2', '8.3']
+    name: PHP ${{ matrix.php-versions }} quality/tests on ${{ matrix.operating-system }}
+    env:
+      key: cache-v1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Arangodb Server
+        run: ./tests/Scripts/install_arangodb.sh
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run quality tools
+        run: composer run-script quality
+
+      - name: Run tests
+        run: composer run-script tests

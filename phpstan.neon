@@ -1,0 +1,10 @@
+###################################################
+# Complete PHPSTAN configuration for Travis CI
+###################################################
+parameters:
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # Issue in arangodb/arangodb-php => https://github.com/arangodb/arangodb-php/issues/293
+        -
+            message: '#Offset (.*) does not exist on string#'
+            path: lib/Phpfastcache/Extensions/Drivers/Arangodb/Driver.php
