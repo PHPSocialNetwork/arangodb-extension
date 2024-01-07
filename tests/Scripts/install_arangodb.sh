@@ -4,7 +4,7 @@ set -e
 
 mkdir -p arangodb
 cd arangodb
-export ARANGODB_ROOT_PASSWD=password
+export ARANGODB_ROOT_PASSWD='password'
 
 curl -OL https://download.arangodb.com/arangodb310/DEBIAN/Release.key
 sudo apt-key add - < Release.key
@@ -25,7 +25,7 @@ echo "#################################"
 printf "\n"
 
 echo "1/3 - Creating 'phpfastcache' user:"
-curl -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user <<EOF
+curl -v -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user <<EOF
 {
   "user" : "phpfastcache",
   "passwd" : "travis"
@@ -34,7 +34,7 @@ EOF
 printf "\n\n"
 
 echo "2/3 - Creating 'phpfastcache' database:"
-curl -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/database <<EOF
+curl -v -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/database <<EOF
 {
   "name" : "phpfastcache",
   "options" : {
@@ -46,7 +46,7 @@ EOF
 printf "\n\n"
 
 echo "3/3 - Giving 'phpfastcache' user access to 'phpfastcache' database:"
-curl -X PUT -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user/phpfastcache/database/phpfastcache <<EOF
+curl -v -X PUT -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user/phpfastcache/database/phpfastcache <<EOF
 {
   "grant" : "rw"
 }
