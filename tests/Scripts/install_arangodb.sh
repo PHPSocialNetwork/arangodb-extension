@@ -13,8 +13,8 @@ echo 'deb https://download.arangodb.com/arangodb310/DEBIAN/ /' | sudo tee /etc/a
 sudo apt-get install apt-transport-https
 sudo apt-get update || true
 
-sudo sh -c 'echo arangodb3 arangodb3/password password $ARANGODB_ROOT_PASSWD | debconf-set-selections'
-sudo sh -c 'echo arangodb3 arangodb3/password_again password $ARANGODB_ROOT_PASSWD | debconf-set-selections'
+sudo sh -c "echo arangodb3 arangodb3/password password $ARANGODB_ROOT_PASSWD | debconf-set-selections"
+sudo sh -c "echo arangodb3 arangodb3/password_again password $ARANGODB_ROOT_PASSWD | debconf-set-selections"
 
 sudo apt-get install arangodb3=3.10.2-1
 
@@ -25,7 +25,7 @@ echo "#################################"
 printf "\n"
 
 echo "1/3 - Creating 'phpfastcache' user:"
-curl -v -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user <<EOF
+curl -v -X POST -u "root:$ARANGODB_ROOT_PASSWD" --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user <<EOF
 {
   "user" : "phpfastcache",
   "passwd" : "travis"
@@ -34,7 +34,7 @@ EOF
 printf "\n\n"
 
 echo "2/3 - Creating 'phpfastcache' database:"
-curl -v -X POST -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/database <<EOF
+curl -v -X POST -u "root:$ARANGODB_ROOT_PASSWD" --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/database <<EOF
 {
   "name" : "phpfastcache",
   "options" : {
@@ -46,7 +46,7 @@ EOF
 printf "\n\n"
 
 echo "3/3 - Giving 'phpfastcache' user access to 'phpfastcache' database:"
-curl -v -X PUT -u root:$ARANGODB_ROOT_PASSWD --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user/phpfastcache/database/phpfastcache <<EOF
+curl -v -X PUT -u "root:$ARANGODB_ROOT_PASSWD" --header 'accept: application/json' --data-binary @- --dump - http://127.0.0.1:8529/_api/user/phpfastcache/database/phpfastcache <<EOF
 {
   "grant" : "rw"
 }
